@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM python:3.9-slim-buster
 
-VOLUME [ "/image-in/", "/image-out/" ] 
+VOLUME [ "/image-in/", "/image-out/", "/app/binaries/" ] 
 
 RUN dpkg --add-architecture i386 && \
 	apt-get update && \
@@ -15,11 +15,6 @@ RUN mkdir -p /app/temp/
 WORKDIR /app/
 
 COPY sprays.py ./
-COPY tier0.dll ./
-COPY vtf2tga.exe ./
-COPY FileSystem_Stdio.dll ./
-COPY vstdlib.dll ./
-
 COPY spray-cron /etc/cron.d/spray-cron
 RUN chmod +x /etc/cron.d/spray-cron 
 
