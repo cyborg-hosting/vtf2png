@@ -49,11 +49,3 @@ for sprayFolderPath in [path for path in map(lambda dir: os.path.join(IN_DIR, di
                 print(count)
             except FileNotFoundError:
                 pass
-                            
-
-                
-                
-
-
-
-
