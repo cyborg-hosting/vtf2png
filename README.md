@@ -2,18 +2,19 @@
 
 A spray(vtf format) converter for spray n' display plugin.
 
-## What you need:
+## What you need
 
-From `(Team Fortress 2 installation)/bin/`
-  - `vtf2tga.exe`
-  - `vstdlib.dll`
-  - `tier0.dll`
-  - `FileSystem_Stdio.dll`
+Grab those files from `(Source Engine Game Windows Installation)/bin/`
+
+- `vtf2tga.exe`
+- `vstdlib.dll`
+- `tier0.dll`
+- `FileSystem_Stdio.dll`
 
 Mount the folder containing those to `/app/binaries/`.  
 ex) `-v '/some/folder/containing/binaries/:/app/binaries/'`
 
-Mount `(Team Fortress 2 installation/tf/downloads/)` to `/image-in`  
+Mount `(SRCDS Installation)/tf/downloads/` to `/image-in`  
 ex) `-v '/tf2/installation/folder/tf/downloads/:/image-in/'`
 
 Folder `/image-out/` is destination folder.
@@ -24,7 +25,7 @@ Folder `/image-out/` is destination folder.
 
     services:
       vtf2apng:
-        image: 'datmoyan/vtf2tga'
+        image: 'datmoyan/vtf2apng'
 
         volumes:
           - './binaries/:/app/binaries/'
@@ -34,5 +35,6 @@ Folder `/image-out/` is destination folder.
         tty: true
         restart: 'always'
 
-## To do:
-  - Mipmap process for 'some' spray image.
+## To do
+
+- Mipmap process for 'some' spray image.
