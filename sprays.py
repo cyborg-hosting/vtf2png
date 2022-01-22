@@ -6,13 +6,13 @@ from PIL import Image
 IN_DIR = '/image-in/user_custom/'
 OUT_DIR = '/image-out/'
 
-command = 'wine ./binaries/vtf2tga.exe -i {input} -o {output}'
+command = 'wine binaries/vtf2tga.exe -i {input} -o {output}'
 
 assert os.path.exists(IN_DIR), 'Image-in volume is not directed to tf/downloads folder.'
-assert os.path.exists('./binaries/vtf2tga.exe'), '\'vtf2tga.exe\' does not exist.'
-assert os.path.exists('./binaries/tier0.dll'), '\'tier0.dll\' does not exist.'
-assert os.path.exists('./binaries/vstdlib.dll'), '\'vstdlib.dll\' does not exist.'
-assert os.path.exists('./binaries/FileSystem_Stdio.dll'), '\'FileSystem_Stdio.dll\' does not exist.'
+assert os.path.exists('binaries/vtf2tga.exe'), '\'vtf2tga.exe\' does not exist.'
+assert os.path.exists('binaries/tier0.dll'), '\'tier0.dll\' does not exist.'
+assert os.path.exists('binaries/vstdlib.dll'), '\'vstdlib.dll\' does not exist.'
+assert os.path.exists('binaries/FileSystem_Stdio.dll'), '\'FileSystem_Stdio.dll\' does not exist.'
 
 count = 0
 
@@ -22,7 +22,7 @@ for sprayFile in glob.iglob(globStr):
     if not os.path.isfile(sprayFile):
         continue
 
-    path, name = os.path.split(sprayFile)
+    _, name = os.path.split(sprayFile)
     file, extension = os.path.splitext(name)
 
     destPath = os.path.join(OUT_DIR, file + '.png')
