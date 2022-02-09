@@ -6,7 +6,7 @@ from PIL import Image
 IN_DIR = '/image-in/user_custom/'
 OUT_DIR = '/image-out/'
 
-command = 'wine binaries/vtf2tga.exe -i {input} -o {output}'
+command = 'WINEPATH="/app/binaries/" wine binaries/vtf2tga.exe -i {input} -o {output}'
 
 assert os.path.exists(IN_DIR), 'Image-in volume is not directed to tf/downloads folder.'
 assert os.path.exists('binaries/vtf2tga.exe'), '\'vtf2tga.exe\' does not exist.'
