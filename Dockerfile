@@ -4,7 +4,7 @@ ARG PUID=1000
 ENV USER=spray
 
 RUN apt-get update && \
-	apt-get -y install cron && \
+	apt-get -y install cron sudo && \
 	rm -r /var/lib/apt/lists/* && \
 	useradd -u "${PUID}" -m "${USER}"
 
