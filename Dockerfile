@@ -12,7 +12,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 VOLUME [ "/in/", "/out/" ] 
 
 ADD ./sprays.py ./
-ADD ./entrypoint.sh ./
 ADD ./crontab /etc/crontab
+
+RUN chmod +x /etc/crontab
 
 CMD [ "cron", "-f" ]
