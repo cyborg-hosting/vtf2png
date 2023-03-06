@@ -6,7 +6,7 @@ import portalocker
 from srctools import VTF
 from srctools.vtf import ImageFormats, VTFFlags
 
-lock_path = Path('.spray.lock')
+lock_path = Path('/var/lock/spray.lock')
 lock = portalocker.Lock(lock_path, fail_when_locked=True)
 try:
     lock.acquire()
