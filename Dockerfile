@@ -1,21 +1,19 @@
-# syntax=docker/dockerfile:1
-FROM python:3.9-slim-buster
+FROM python:3.11-slim
 
-VOLUME [ "/image-in/", "/image-out/", "/app/binaries/" ] 
+RUN apt-get update && \
+	apt-get -y install cron && \
+	rm -r /var/lib/apt/lists/*
 
-RUN dpkg --add-architecture i386 && \
-	apt-get update && \
-	apt-get -y upgrade && \
-	apt-get -y install wine wine32 cron && \
-	rm -rf /var/lib/apt/lists/* && \
-	python -m pip install --no-cache-dir pillow
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN mkdir -p /app/temp/
+VOLUME [ "/in/", "/out/" ] 
 
 WORKDIR /app/
 
-COPY sprays.py ./
-COPY spray-cron /etc/cron.d/spray-cron
+ADD ./sprays.py ./
+ADD ./entrypoint.sh ./
+ADD ./spray-cron /etc/cron.d/spray-cron
+
 RUN chmod +x /etc/cron.d/spray-cron 
 
-CMD [ "cron", "-f" ]
+CMD [ "/app/entrypoint.sh" ]

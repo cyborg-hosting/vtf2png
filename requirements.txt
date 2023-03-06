@@ -1,0 +1,2 @@
+srctools==2.3.9
+pillow==9.4.0
