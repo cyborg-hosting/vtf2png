@@ -18,6 +18,8 @@ VOLUME [ "/in/", "/out/" ]
 ADD ./sprays.py ./
 ADD ./crontab /etc/crontab
 
-RUN chmod +x /etc/crontab
+RUN chmod +x /etc/crontab && \
+	touch .spray.lock && \
+	chown spray:spray .spray.lock
 
 CMD [ "cron", "-f" ]
