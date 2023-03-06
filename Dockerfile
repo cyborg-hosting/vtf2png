@@ -13,9 +13,6 @@ VOLUME [ "/in/", "/out/" ]
 
 ADD ./sprays.py ./
 ADD ./entrypoint.sh ./
-ADD ./spray-cron /etc/cron.d/spray-cron
+ADD ./crontab /etc/crontab
 
-RUN chmod +x /etc/cron.d/spray-cron && \
-	chmod +x ./entrypoint.sh
-
-CMD [ "/app/entrypoint.sh" ]
+CMD [ "cron", "-f" ]
