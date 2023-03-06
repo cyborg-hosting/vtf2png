@@ -1,8 +1,12 @@
 FROM python:3.11-slim
 
+ARG PUID=1000
+ENV USER=spray
+
 RUN apt-get update && \
 	apt-get -y install cron && \
-	rm -r /var/lib/apt/lists/*
+	rm -r /var/lib/apt/lists/* && \
+	useradd -u "${PUID}" -m "${USER}"
 
 WORKDIR /app/
 
