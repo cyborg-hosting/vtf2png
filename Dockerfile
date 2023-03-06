@@ -4,11 +4,12 @@ RUN apt-get update && \
 	apt-get -y install cron && \
 	rm -r /var/lib/apt/lists/*
 
+WORKDIR /app/
+
+ADD ./requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 VOLUME [ "/in/", "/out/" ] 
-
-WORKDIR /app/
 
 ADD ./sprays.py ./
 ADD ./entrypoint.sh ./
