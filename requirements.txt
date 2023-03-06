@@ -1,2 +1,3 @@
-srctools==2.3.9
 pillow==9.4.0
+portalocker==2.7.0
+srctools==2.3.9

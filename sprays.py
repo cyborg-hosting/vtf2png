@@ -2,8 +2,17 @@ from os.path import getmtime
 from pathlib import Path
 from sys import stderr
 
+import portalocker
 from srctools import VTF
 from srctools.vtf import ImageFormats, VTFFlags
+
+lock_path = Path('.spray.lock')
+lock = portalocker.Lock(lock_path, fail_when_locked=True)
+try:
+    lock.acquire()
+except portalocker.AlreadyLocked as e:
+    print(f'[INFO] portalocker.AlreadyLocked: {e}')
+    exit()
 
 INPUT_DIRECTORY = Path(r'/in/')
 OUTPUT_DIRECTORY = Path(r'/out/')
@@ -75,3 +84,5 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
         print(f'[ERR] {src_path}: {e.with_traceback()}', file=stderr)
 
 print('[INFO] total number of processed files:', count)
+
+lock.release()

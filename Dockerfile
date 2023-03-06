@@ -11,7 +11,7 @@ RUN apt-get update && \
 WORKDIR /app/
 
 ADD ./requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir --use-pep517 --requirement requirements.txt
 
 VOLUME [ "/in/", "/out/" ] 
 
