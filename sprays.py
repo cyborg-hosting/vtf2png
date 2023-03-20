@@ -35,12 +35,12 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
     try:
         vtf = None
         try:
-            with open(src_path, 'rb') as file:
-
+            with src_path.open('rb') as file:
                 try:
                     vtf = VTF.read(file)
                 except ValueError as e:
                     print(f'[ERR] {src_path}: {e}', file=stderr)
+                    src_path.unlink()
                     continue
                 
                 if vtf.flags & (VTFFlags.ONEBITALPHA | VTFFlags.EIGHTBITALPHA):
@@ -57,9 +57,7 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
             print(f'[ERR] {src_path}: {e}', file=stderr)
             continue
 
-        if vtf.frame_count <= 0:
-            continue
-        elif vtf.frame_count == 1:
+        if vtf.frame_count <= 1:
             img = vtf.get().to_PIL()
             img.save(
                 dst_path,
