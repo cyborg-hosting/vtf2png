@@ -58,6 +58,8 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
             continue
 
         if vtf.frame_count <= 0:
+            if len(vtf) != 0:
+                print(f'[DEBUG] {vtf._frames}')
             continue
         elif vtf.frame_count == 1:
             img = vtf.get().to_PIL()
