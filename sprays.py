@@ -57,7 +57,9 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
             print(f'[ERR] {src_path}: {e}', file=stderr)
             continue
 
-        if vtf.frame_count <= 1:
+        if vtf.frame_count <= 0:
+            continue
+        elif vtf.frame_count == 1:
             img = vtf.get().to_PIL()
             img.save(
                 dst_path,
@@ -79,7 +81,7 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
 
         count += 1
     except Exception as e:
-        print(f'[ERR] {src_path}: {e.with_traceback()}', file=stderr)
+        print(f'[ERR] {src_path}: {e}', file=stderr)
 
 print('[INFO] total number of processed files:', count)
 
