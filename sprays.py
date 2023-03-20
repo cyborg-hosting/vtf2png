@@ -43,7 +43,7 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
                 try:
                     vtf = VTF.read(file)
                 except ValueError as e:
-                    logging.exception(e, src_path)
+                    logging.exception(e, str(src_path))
                     src_path.unlink()
                     continue
                 
@@ -58,7 +58,7 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
 
                 vtf.load()
         except PermissionError as e:
-            logging.exception(e, src_path)
+            logging.exception(e, str(src_path))
             continue
 
         if vtf.frame_count <= 0:
@@ -87,7 +87,7 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
 
         count += 1
     except Exception as e:
-        logger.exception(e, src_path, stack_info=True)
+        logger.exception(e, str(src_path), stack_info=True)
 
 print('[INFO] total number of processed files:', count)
 
