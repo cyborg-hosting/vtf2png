@@ -1,17 +1,21 @@
 from os.path import getmtime
 from pathlib import Path
 from sys import stderr
+import logging
 
 import portalocker
 from srctools import VTF
 from srctools.vtf import ImageFormats, VTFFlags
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 lock_path = Path('/var/lock/spray.lock')
 lock = portalocker.Lock(lock_path, fail_when_locked=True)
 try:
     lock.acquire()
 except portalocker.AlreadyLocked as e:
-    print(f'[INFO] portalocker.AlreadyLocked: {e}')
+    logger.info(e, exc_info=True)
     exit()
 
 INPUT_DIRECTORY = Path(r'/in/')
@@ -39,7 +43,7 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
                 try:
                     vtf = VTF.read(file)
                 except ValueError as e:
-                    print(f'[ERR] {src_path}: {e}', file=stderr)
+                    logging.exception(e, src_path)
                     src_path.unlink()
                     continue
                 
@@ -54,12 +58,12 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
 
                 vtf.load()
         except PermissionError as e:
-            print(f'[ERR] {src_path}: {e}', file=stderr)
+            logging.exception(e, src_path)
             continue
 
         if vtf.frame_count <= 0:
             if len(vtf) != 0:
-                print(f'[DEBUG] {vtf._frames}')
+                logger.debug(vtf._frames)
             continue
         elif vtf.frame_count == 1:
             img = vtf.get().to_PIL()
@@ -79,11 +83,11 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
                 duration=200,
                 loop=0,
             )
-        print(f'[INFO] processed \'{src_path}\'')
+        logger.info('processed', src_path)
 
         count += 1
     except Exception as e:
-        print(f'[ERR] {src_path}: {e}', file=stderr)
+        logger.exception(e, src_path, stack_info=True)
 
 print('[INFO] total number of processed files:', count)
 
