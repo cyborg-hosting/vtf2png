@@ -44,7 +44,6 @@ for src_path in INPUT_DIRECTORY.glob('??/????????.dat'):
                     vtf = VTF.read(file)
                 except ValueError as e:
                     logger.error(f'{src_path}: {e}')
-                    src_path.unlink()
                     continue
                 
                 if vtf.flags & (VTFFlags.ONEBITALPHA | VTFFlags.EIGHTBITALPHA):
